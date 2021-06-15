@@ -44,7 +44,7 @@ def get_loaders(
 
     val_loader = DataLoader(
         val_ds,
-        batch_size=batch_size,
+        batch_size=1,
         num_workers=num_workers,
         pin_memory=pin_memory,
         shuffle=False,
@@ -81,6 +81,7 @@ def save_predictions_as_imgs(
 ):
     model.eval()
     for idx, (x, y) in enumerate(loader):
+        breakpoint()
         x = x.to(device=device)
         with torch.no_grad():
             preds = torch.sigmoid(model(x))

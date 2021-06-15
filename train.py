@@ -22,7 +22,7 @@ NUM_WORKERS = 2
 IMAGE_HEIGHT = 90  # 1280 originally
 IMAGE_WIDTH = 90  # 1918 originally
 PIN_MEMORY = True
-LOAD_MODEL = False
+LOAD_MODEL = True
 TRAIN_IMG_DIR = "data/train_images/"
 TRAIN_MASK_DIR = "data/train_masks/"
 VAL_IMG_DIR = "data/val_images/"
@@ -95,9 +95,12 @@ def main():
     )
 
     if LOAD_MODEL:
-        load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
+        load_checkpoint(torch.load("backgroundremoval.tar"), model)
 
-
+    save_predictions_as_imgs(
+        val_loader, model, folder="saved_images/", device=DEVICE
+    )
+    """
     check_accuracy(val_loader, model, device=DEVICE)
     scaler = torch.cuda.amp.GradScaler()
 
@@ -115,9 +118,7 @@ def main():
         check_accuracy(val_loader, model, device=DEVICE)
 
         # print some examples to a folder
-        save_predictions_as_imgs(
-            val_loader, model, folder="saved_images/", device=DEVICE
-        )
+    """
 
 
 if __name__ == "__main__":
